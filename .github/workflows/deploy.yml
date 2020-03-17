@@ -8,9 +8,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
+            - name: get tag name
+              run: echo ::set-env name=TAG_NAME::${GITHUB_REF##*/}
             - name: create addon.xml
               run: |
-                sed -i 's/VERSION/${{ github.ref }}/g' script.autozoom.cih/addon.xml
+                sed -i 's/VERSION/${{ env.TAG_NAME }}/g' script.autozoom.cih/addon.xml
 
             - name: zip addon
               run: zip -r script.autozoom.cih.zip script.autozoom.cih
