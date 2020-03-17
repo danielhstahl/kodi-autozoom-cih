@@ -1,0 +1,21 @@
+name: deploy
+on: push
+
+jobs:
+    release: 
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: check addon
+              run: |
+                pip3 install kodi-addon-checker
+                kodi-addon-checker script.autozoom.cih --branch leia
+
+            - name: zip addon
+              run: zip -r script.autozoom.cih.zip script.autozoom.cih
+
+            - name: release files
+              uses: ncipollo/release-action@v1
+              with:
+                artifacts: "script.autozoom.cih.zip"
+                token: ${{ secrets.ACCESS_TOKEN }}
