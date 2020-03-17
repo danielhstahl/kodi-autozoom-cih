@@ -17,21 +17,22 @@ def setMasking(xbmc):
     xbmc.executebuiltin('Skin.setbool (ARmask)')
 
 
+ZOOM_LEVEL = 23
+
+
 def setZoomNonScope(xbmc):
     # need to zoom out to 77
-    zoomlevel = 8
-    for _level in range(zoomlevel):
+    for _level in range(ZOOM_LEVEL):
         xbmc.executebuiltin('XBMC.Action(ZoomOut)')
 
 
 def resetZoom(xbmc):
-    zoomlevel = 8
-    for _level in range(zoomlevel):
+    for _level in range(ZOOM_LEVEL):
         xbmc.executebuiltin('XBMC.Action(ZoomIn)')
 
 
 def main(xbmc):
-    xbmc.log('addon %s starting' % addonname,  xbmc.LOG)
+    xbmc.log('addon %s starting' % addonname)
     try:
         aspect_ratio = getAspectRatio(xbmc)
         xbmc.log('aspect ratio: %s' % aspect_ratio)
