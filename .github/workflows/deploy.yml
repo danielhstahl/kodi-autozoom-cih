@@ -8,14 +8,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
-            - uses: actions/setup-python@v1
-              with:
-                python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-                architecture: 'x64'
-            - name: check addon
+            - name: create addon.xml
               run: |
-                pip install kodi-addon-checker
-                kodi-addon-checker script.autozoom.cih --branch leia
+                sed -i 's/VERSION/${{ GITHUB_REF }}/g' script.autozoom.cih/addon.xml
 
             - name: zip addon
               run: zip -r script.autozoom.cih.zip script.autozoom.cih

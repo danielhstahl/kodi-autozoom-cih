@@ -14,3 +14,10 @@ jobs:
               run: |
                 pip install kodi-addon-checker
                 kodi-addon-checker script.autozoom.cih --branch leia
+        
+            - name: Bump version and push tag
+              uses: anothrNick/github-tag-action@1.17.2
+              env:
+                GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+                RELEASE_BRANCHES: '.*'
+                WITH_V: false
