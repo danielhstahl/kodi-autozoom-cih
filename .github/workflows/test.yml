@@ -1,0 +1,16 @@
+name: test
+on: push
+
+jobs:
+    test: 
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - uses: actions/setup-python@v1
+              with:
+                python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+                architecture: 'x64'
+            - name: check addon
+              run: |
+                pip install kodi-addon-checker
+                kodi-addon-checker script.autozoom.cih --branch leia

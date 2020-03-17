@@ -31,18 +31,20 @@ def resetZoom(xbmc):
 
 
 def main(xbmc):
-    xbmc.log('addon %s starting' % addonname,  xbmc.LOGDEBUG)
+    xbmc.log('addon %s starting' % addonname,  xbmc.LOG)
     try:
+        aspect_ratio = getAspectRatio(xbmc)
+        xbmc.log('aspect ratio: %s' % aspect_ratio)
         should_zoom = getAspectRatio(xbmc) in ASPECT_RATIO_TO_ZOOM
-        xbmc.log('should zoom: %s' % should_zoom,  xbmc.LOGDEBUG)
+        xbmc.log('should zoom: %s' % should_zoom)
         if sys.argv[1] == 'zoom' and should_zoom:
-            xbmc.log('attempting to zoom',  xbmc.LOGDEBUG)
+            xbmc.log('attempting to zoom')
             setZoomNonScope(xbmc)
         if sys.argv[1] == 'reset' and should_zoom:
-            xbmc.log('attempting to reset',  xbmc.LOGDEBUG)
+            xbmc.log('attempting to reset')
             setZoomNonScope(xbmc)
     except:
-        xbmc.log("Unexpected error: %s" % sys.exc_info()[0], xbmc.LOGDEBUG)
+        xbmc.log("Unexpected error: %s" % sys.exc_info()[0])
 
 
 if __name__ == '__main__':
