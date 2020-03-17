@@ -7,8 +7,12 @@ jobs:
         steps:
             - uses: actions/checkout@v1
             - name: check addon
+              uses: actions/setup-python@v1
+              with:
+                python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+                architecture: 'x64'
               run: |
-                pip3 install kodi-addon-checker
+                pip install kodi-addon-checker
                 kodi-addon-checker script.autozoom.cih --branch leia
 
             - name: zip addon
