@@ -3,6 +3,7 @@ import sys
 import xbmcgui
 import xbmcaddon
 import xbmc
+import json
 addon = xbmcaddon.Addon()
 addonname = addon.getAddonInfo('name')
 capture = xbmc.RenderCapture()
@@ -90,20 +91,28 @@ ZOOM_LEVEL = 23
 ZOOM_RESET = 50
 
 
-def setZoomNonScope(xbmc):
-    # need to zoom out to 77
-    for _level in range(ZOOM_LEVEL):
-        xbmc.executebuiltin('XBMC.Action(ZoomOut)')
+def _zoomHelper(zoom_level):
+    return {
+        "jsonrpc": "2.0",
+        "method": "Player.SetViewMode",
+        "params": {"viewmode": {"zoom": zoom_level}},
+        "id": 1
+    }
 
-# hacky, but if already zoomed out this will work
-# I never zoom in, so this should reset
+
+def setZoomNonScope(xbmc):
+    # need to zoom out to 76
+    body = _zoomHelper(.76)
+    json_response = xbmc.executeJSONRPC(json.dumps(body).encode("utf-8"))
+    json_object = json.loads(json_response.decode('utf-8', 'replace'))
+    xbmc.log("Response: %s" % json_object)
 
 
 def resetZoom(xbmc):
-    for _level in range(ZOOM_RESET):
-        xbmc.executebuiltin('XBMC.Action(ZoomOut)')
-    for _level in range(ZOOM_RESET):
-        xbmc.executebuiltin('XBMC.Action(ZoomIn)')
+    body = _zoomHelper(1)
+    json_response = xbmc.executeJSONRPC(json.dumps(body).encode("utf-8"))
+    json_object = json.loads(json_response.decode('utf-8', 'replace'))
+    xbmc.log("Response: %s" % json_object)
 
 
 def main(xbmc):
