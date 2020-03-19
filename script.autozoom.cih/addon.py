@@ -104,31 +104,33 @@ def setZoomNonScope(xbmc):
     # need to zoom out to 76
     body = _zoomHelper(.76)
     json_response = xbmc.executeJSONRPC(json.dumps(body).encode("utf-8"))
-    json_object = json.loads(json_response.decode('utf-8', 'replace'))
-    xbmc.log("Response: %s" % json_object)
+    #json_object = json.loads(json_response.decode('utf-8', 'replace'))
+    xbmc.log("Response: %s" % json_response)
 
 
 def resetZoom(xbmc):
     body = _zoomHelper(1)
     json_response = xbmc.executeJSONRPC(json.dumps(body).encode("utf-8"))
-    json_object = json.loads(json_response.decode('utf-8', 'replace'))
-    xbmc.log("Response: %s" % json_object)
+    xbmc.log("Reset Zoom")
+    xbmc.log("Response: %s" % json_response)
+    #json_object = json.loads(json_response.decode('utf-8', 'replace'))
+    #xbmc.log("Response: %s" % json_object)
 
 
 def main(xbmc):
     xbmc.log('addon %s starting' % addonname)
 
-    try:
-        resetZoom(xbmc)
-        aspect_ratio = GetAspectRatioFromFrame(xbmc, capture)
-        xbmc.log('aspect ratio: %s' % aspect_ratio)
-        should_zoom = aspect_ratio in ASPECT_RATIO_TO_ZOOM
-        xbmc.log('should zoom: %s' % should_zoom)
-        if should_zoom:
-            xbmc.log('attempting to zoom')
-            setZoomNonScope(xbmc)
-    except:
-        xbmc.log("Unexpected error: %s" % sys.exc_info()[0])
+    # try:
+    resetZoom(xbmc)
+    aspect_ratio = GetAspectRatioFromFrame(xbmc, capture)
+    xbmc.log('aspect ratio: %s' % aspect_ratio)
+    should_zoom = aspect_ratio in ASPECT_RATIO_TO_ZOOM
+    xbmc.log('should zoom: %s' % should_zoom)
+    if should_zoom:
+        xbmc.log('attempting to zoom')
+        setZoomNonScope(xbmc)
+    # except:
+    #    xbmc.log("Unexpected error: %s" % sys.exc_info()[0])
 
 
 if __name__ == '__main__':
